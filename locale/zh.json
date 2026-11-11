@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "万物逆向（REA）",
+    "description": "通过工具过滤代理加载 rea MCP 工具（精简目录，按需扩展）及 reverse-engineer-anything 技能。禁用后可从新会话中移除，约节省 8k 上下文 token。"
+  }
+}

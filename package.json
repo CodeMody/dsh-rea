@@ -1,0 +1,25 @@
+{
+  "name": "@local/dsh-rea",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Toggleable Reverse Engineer Anything (REA) plugin: the rea MCP server behind the tool-filter proxy plus the reverse-engineer-anything skill.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "README.md",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "mcp",
+    "skills"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

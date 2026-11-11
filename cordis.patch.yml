@@ -1,0 +1,73 @@
+# Reverse Engineer Anything (REA) — toggleable bundle for the desktop profile.
+#
+# Two rows, one bundle switch:
+#
+#   rea-mcp     The `rea` MCP server, launched through the stdio filtering
+#               proxy at mcp/rea-tool-filter.mjs inside this bundle — never
+#               `rea mcp` directly. REA 6.8.0 advertises all ~229 tools
+#               (~302 KB / ~75k tokens per request); the proxy advertises a
+#               curated ~16-tool compact set and widens it at runtime with
+#               load_rea_tools / list_rea_tools. tools/call is never restricted,
+#               so the filter can only reduce clutter, never capability.
+#               Edit the curated set in mcp/rea-tool-filter.mjs (DEFAULT_TOOLS,
+#               PRESETS); a REA_FILTER_TOOLS env value overrides it entirely.
+#
+#               Machine knobs — every path below is a `!!js` expression that
+#               prefers a Windows environment variable and falls back to the
+#               literal this bundle was built with:
+#                 GHIDRA_INSTALL_DIR  Ghidra installation folder (point here!)
+#                 DSH_REA_JAVA_HOME   JDK 21+ for REA's Ghidra provider — NOT
+#                                     the global JAVA_HOME, which on many
+#                                     machines (including this one) still
+#                                     points at a JDK 17 REA cannot use
+#                 REA_FILTER_NODE     node.exe for the proxy AND the REA child
+#                 REA_FILTER_SCRIPT   rea-agents scripts/rea.mjs (npm install)
+#                 USERPROFILE         where ~\.dsh profiles live (paths below)
+#               Point at a different Ghidra by setting GHIDRA_INSTALL_DIR in
+#               System > Environment (no YAML edit, survives bundle updates),
+#               or change the fallback literal here, or edit the row config in
+#               Settings. Keep REA_ANALYSIS_PROVIDER=ghidra and the compact
+#               schema profiles — they are what keeps the context small.
+#
+#   rea-skills  A dedicated @deepseek-ai/dsh-skill-filesystem instance whose
+#               only scanned root is this bundle's vendored `skills/` directory
+#               (the reverse-engineer-anything skill from the installed
+#               rea-agents package). The unique providerName keeps it apart
+#               from the default `filesystem` provider, so default project/user
+#               roots — and every other skill — are untouched.
+#
+#               The USERPROFILE fallback ('' when missing) keeps the expression
+#               defined on non-Windows clones; the paths then simply scan
+#               nothing until the profile layout matches.
+#
+# Disable this bundle in the Plugins manager to drop the REA tools and the
+# skill from sessions started afterwards (saves ~8k tokens of always-on
+# context); existing sessions keep what they started with. Do NOT run
+# `rea setup --client dsh` while disabled — it writes a new
+# ~/.dsh/cordis.patch.yml that launches REA unfiltered (~75k tokens per
+# request). If that happens, delete that file again or point its args at
+# this bundle's mcp/rea-tool-filter.mjs.
+- insert:
+    - id: rea-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: rea
+        transport: stdio
+        command: !!js process.env.REA_FILTER_NODE || 'C:\\Program Files\\nodejs\\node.exe'
+        args:
+          - !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@local\\dsh-rea\\mcp\\rea-tool-filter.mjs'
+        toolCallTimeoutMs: 600000
+        env:
+          REA_ANALYSIS_PROVIDER: ghidra
+          REA_MCP_INPUT_SCHEMA_PROFILE: compact
+          REA_MCP_OUTPUT_SCHEMA_PROFILE: "off"
+          REA_FILTER_NODE: !!js process.env.REA_FILTER_NODE || 'C:\\Program Files\\nodejs\\node.exe'
+          REA_FILTER_SCRIPT: !!js process.env.REA_FILTER_SCRIPT || 'C:\\Users\\CodeMody Laptop\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs'
+          GHIDRA_INSTALL_DIR: !!js process.env.GHIDRA_INSTALL_DIR || 'C:\\ghidra_12.1.4_PUBLIC'
+          JAVA_HOME: !!js process.env.DSH_REA_JAVA_HOME || 'C:\\Users\\CodeMody Laptop\\.jdks\\openjdk-26.0.1'
+    - id: rea-skills
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      config:
+        providerName: rea
+        includeDefaultRoots: false
+        bundledSkillDir: !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@local\\dsh-rea\\skills'

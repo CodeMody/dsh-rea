@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Reverse Engineer Anything (REA)",
+    "description": "Adds the rea MCP tools behind the tool-filter proxy (compact catalog, widened on demand) and the reverse-engineer-anything skill. Disable to remove both from new sessions and save ~8k tokens of context."
+  }
+}
