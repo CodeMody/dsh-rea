@@ -4,13 +4,30 @@
   "private": true,
   "description": "Toggleable Reverse Engineer Anything (REA) plugin: the rea MCP server behind the tool-filter proxy plus the reverse-engineer-anything skill.",
   "license": "MIT",
+  "author": "CodeMody",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeMody/dsh-rea.git"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "reverse-engineering",
+    "ghidra",
+    "mcp",
+    "skill"
+  ],
   "type": "module",
+  "main": "./index.js",
   "exports": {
+    ".": "./index.js",
     "./locale/*.json": "./locale/*.json",
     "./icon": "./icon.svg"
   },
   "files": [
     "README.md",
+    "index.js",
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",

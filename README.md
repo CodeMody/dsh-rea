@@ -27,12 +27,14 @@ filtering proxy instead, so you get the same capability for a few thousand token
 
    Tell REA where Ghidra lives — set `GHIDRA_INSTALL_DIR` to the Ghidra folder (or
    use the fallback/edit the knobs below).
-2. **Install the bundle** from the Plugins manager (works exactly like the other
-   `github:`-sourced bundles):
+2. **Install the bundle** — full CLI command:
 
    ```
-   github:CodeMody/dsh-rea
+   dsh plugin --profile desktop add github:CodeMody/dsh-rea
    ```
+
+   Or paste `github:CodeMody/dsh-rea` into the Plugins manager's install field
+   (works exactly like the other `github:`-sourced bundles).
 
 3. **Restart the harness**, then start a new session: you should see the
    `mcp__rea__*` tools and the REA skill. Disabling the bundle makes both disappear
@@ -80,6 +82,17 @@ config in Settings reloads the connection in place.
   and `~\.dsh\rea-tool-filter.mjs`. All three were removed once the bundle took over.
   Do **not** run `rea setup --client dsh` again — it would recreate an unfiltered
   global patch file; if that happens, delete `~\.dsh\cordis.patch.yml` and restart.
+
+## Compatibility
+
+- **DSH:** `0.2.2-rc.1`, Windows `desktop` profile — the patch builds its
+  profile paths from `%USERPROFILE%\.dsh\profiles\desktop\…`.
+- **Prerequisites:** `rea-agents` on npm (cut for REA 6.8.0), a Ghidra install
+  (tested with 12.1.4), and a JDK 21+ — see [Machine knobs](#machine-knobs-point-at-your-own-ghidra).
+- **Permissions:** spawns one stdio child process (the filtered `rea` MCP
+  server); no network access of its own beyond what REA does.
+- **License:** MIT ([LICENSE](LICENSE)); the vendored skill is from
+  `rea-agents`, see [Provenance](#provenance).
 
 ## Provenance
 
