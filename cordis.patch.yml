@@ -55,7 +55,7 @@
         transport: stdio
         command: !!js process.env.REA_FILTER_NODE || 'C:\\Program Files\\nodejs\\node.exe'
         args:
-          - !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@local\\dsh-rea\\mcp\\rea-tool-filter.mjs'
+          - !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@codemody\\dsh-rea\\mcp\\rea-tool-filter.mjs'
         toolCallTimeoutMs: 600000
         env:
           REA_ANALYSIS_PROVIDER: ghidra
@@ -70,4 +70,4 @@
       config:
         providerName: rea
         includeDefaultRoots: false
-        bundledSkillDir: !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@local\\dsh-rea\\skills'
+        bundledSkillDir: !!js (process.env.USERPROFILE || '') + '\\.dsh\\profiles\\desktop\\node_modules\\@codemody\\dsh-rea\\skills'

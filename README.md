@@ -30,18 +30,18 @@ filtering proxy instead, so you get the same capability for a few thousand token
 2. **Install the bundle** — full CLI command:
 
    ```
-   dsh plugin --profile desktop add github:CodeMody/dsh-rea
+   dsh plugin --profile desktop add @codemody/dsh-rea
    ```
 
-   Or paste `github:CodeMody/dsh-rea` into the Plugins manager's install field
-   (works exactly like the other `github:`-sourced bundles).
+   Or paste `@codemody/dsh-rea` (npm) or `github:CodeMody/dsh-rea` (source)
+   into the Plugins manager's install field — like the other bundles here.
 
 3. **Restart the harness**, then start a new session: you should see the
    `mcp__rea__*` tools and the REA skill. Disabling the bundle makes both disappear
    from sessions started afterwards (~8k saved vs. not having REA at all).
 
 > **Note:** like the other bundles here, the patch uses a **literal path into the
-> default `desktop` profile** (`…\.dsh\profiles\desktop\node_modules\@local\dsh-rea\…`,
+> default `desktop` profile** (`…\.dsh\profiles\desktop\node_modules\@codemody\dsh-rea\…`,
 > built from `%USERPROFILE%`). If you rename the profile or move `.dsh`, update
 > `args` and `bundledSkillDir` in [`cordis.patch.yml`](cordis.patch.yml).
 
@@ -75,7 +75,7 @@ config in Settings reloads the connection in place.
 
 - The toggle affects sessions started afterwards; existing sessions keep the tool
   catalog they started with.
-- **Uninstall**: Plugins → `@local/dsh-rea` → uninstall (or `plugin_manager`
+- **Uninstall**: Plugins → `@codemody/dsh-rea` → uninstall (or `plugin_manager`
   `remove_bundle`). Nothing of the bundle stays behind beyond pnpm's own files.
 - History for *this* machine: before the bundle, REA lived in `~\.dsh\cordis.patch.yml`
   (written by `rea setup --client dsh`), `~\.agents\skills\reverse-engineer-anything`,
