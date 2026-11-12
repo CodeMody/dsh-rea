@@ -27,10 +27,11 @@ filtering proxy instead, so you get the same capability for a few thousand token
 
    Tell REA where Ghidra lives — set `GHIDRA_INSTALL_DIR` to the Ghidra folder (or
    use the fallback/edit the knobs below).
-2. **Install the bundle** — full CLI command:
+2. **Install the bundle** — full CLI command (desktop app or web app):
 
    ```
    dsh plugin --profile desktop add @codemody/dsh-rea
+   dsh plugin --profile web add @codemody/dsh-rea
    ```
 
    Or paste `@codemody/dsh-rea` (npm) or `github:CodeMody/dsh-rea` (source)
@@ -42,8 +43,9 @@ filtering proxy instead, so you get the same capability for a few thousand token
 
 > **Note:** like the other bundles here, the patch uses a **literal path into the
 > default `desktop` profile** (`…\.dsh\profiles\desktop\node_modules\@codemody\dsh-rea\…`,
-> built from `%USERPROFILE%`). If you rename the profile or move `.dsh`, update
-> `args` and `bundledSkillDir` in [`cordis.patch.yml`](cordis.patch.yml).
+> built from `%USERPROFILE%`). If you rename the profile, move `.dsh`, or install
+> into the **`web`** profile, swap the `desktop` segment in `args` and
+> `bundledSkillDir` in [`cordis.patch.yml`](cordis.patch.yml).
 
 ## Machine knobs (point at your own Ghidra)
 
@@ -85,8 +87,10 @@ config in Settings reloads the connection in place.
 
 ## Compatibility
 
-- **DSH:** `0.2.2-rc.1`, Windows `desktop` profile — the patch builds its
-  profile paths from `%USERPROFILE%\.dsh\profiles\desktop\…`.
+- **DSH:** `0.2.2-rc.1`, Windows; the patch builds its profile paths from
+  `%USERPROFILE%\.dsh\profiles\desktop\…`, so it targets the `desktop` profile —
+  for the `web` profile (or a renamed one) swap the `desktop` segment in
+  `args`/`bundledSkillDir`.
 - **Prerequisites:** `rea-agents` on npm (cut for REA 6.8.0), a Ghidra install
   (tested with 12.1.4), and a JDK 21+ — see [Machine knobs](#machine-knobs-point-at-your-own-ghidra).
 - **Permissions:** spawns one stdio child process (the filtered `rea` MCP
