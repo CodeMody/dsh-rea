@@ -34,8 +34,8 @@ filtering proxy instead, so you get the same capability for a few thousand token
    dsh plugin --profile web add @codemody/dsh-rea
    ```
 
-   Or paste `@codemody/dsh-rea` (npm) or `github:CodeMody/dsh-rea` (source)
-   into the Plugins manager's install field — like the other bundles here.
+   Or paste the package name `@codemody/dsh-rea` into the Plugins manager's
+   install field — like the other bundles here.
 
 3. **Restart the harness**, then start a new session: you should see the
    `mcp__rea__*` tools and the REA skill. Disabling the bundle makes both disappear
